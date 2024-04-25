@@ -19,6 +19,9 @@ import 'inline_span.dart';
 import 'text_painter.dart';
 import 'text_scaler.dart';
 
+typedef BoxCollectorCallback = void Function(
+    Iterable<TextBox> Function(int start, int end) getBoxesForRange);
+
 // Examples can assume:
 // late TextSpan myTextSpan;
 
@@ -85,9 +88,13 @@ class TextSpan extends InlineSpan implements HitTestTarget, MouseTrackerAnnotati
     this.semanticsLabel,
     this.locale,
     this.spellOut,
-  }) : mouseCursor = mouseCursor ??
-         (recognizer == null ? MouseCursor.defer : SystemMouseCursors.click),
-       assert(!(text == null && semanticsLabel != null));
+    this.onPositioned,
+  })  : mouseCursor = mouseCursor ??
+            (recognizer == null ? MouseCursor.defer : SystemMouseCursors.click),
+        assert(!(text == null && semanticsLabel != null));
+
+  /// Called during layout with the position of each child
+  final BoxCollectorCallback? onPositioned;
 
   /// The text contained in this span.
   ///

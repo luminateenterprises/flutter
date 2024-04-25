@@ -1205,6 +1205,14 @@ class TextPainter {
       ..layout(ui.ParagraphConstraints(width: layoutMaxWidth));
     final _TextLayout layout = _TextLayout._(paragraph, textDirection, this);
     final double contentWidth = layout._contentWidthFor(minWidth, maxWidth, textWidthBasis);
+    text.visitChildren(
+          (InlineSpan span) {
+        if (span is TextSpan && span.onPositioned != null) {
+          span.onPositioned!(paragraph.getBoxesForRange);
+        }
+        return true;
+      },
+    );
 
     final _TextPainterLayoutCacheWithOffset newLayoutCache;
     // Call layout again if newLayoutCache had an infinite paint offset.
