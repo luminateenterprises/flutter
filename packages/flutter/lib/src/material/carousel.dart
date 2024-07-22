@@ -1303,6 +1303,8 @@ class _CarouselPosition extends ScrollPositionWithSingleContext implements _Caro
        || flexWeights == null && itemExtent != null),
        _itemToShowOnStartup = initialItem.toDouble(),
        _consumeMaxWeight = consumeMaxWeight,
+       _itemExtent = itemExtent,
+       _flexWeights = flexWeights,
        super(
          initialPixels: null,
        );
